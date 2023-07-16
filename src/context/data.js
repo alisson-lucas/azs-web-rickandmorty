@@ -29,17 +29,17 @@ function AppWrapper({ children }) {
   const { data } = useQuery(QUERY)
   const [items, setItems] = useState(data)
   const [search, setSearch] = useState('')
-  const [favorites, setFavorites] = useState([]);
+
+  let storage = JSON.parse(localStorage.getItem("favorites")) || []
+  const [favorites, setFavorites] = useState(storage || []);
+
 
   const params = useParams()
   const id = params.id
 
-  // const [content, setItems] = useState(data)
 
   const content = data?.episodes.results
 
-  // const char = data?.episodes.results[id].characters
-  // console.log('data:',data?.episodes.results);
   console.log(content);
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites))
@@ -48,7 +48,7 @@ function AppWrapper({ children }) {
 
   }, [favorites])
 
-  console.log('favorite context:', favorites);
+  // console.log('favorite context:', favorites);
 
   return (
     <AppContext.Provider value={{ items, setItems, content, search, setSearch, favorites, setFavorites, data }}>
