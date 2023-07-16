@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { useQuery } from '@/utils/graphql';
 import { usePathname, useParams, useRouter } from 'next/navigation'
 
@@ -41,6 +41,12 @@ function AppWrapper({ children }) {
   // const char = data?.episodes.results[id].characters
   // console.log('data:',data?.episodes.results);
   console.log(content);
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites))
+    let favoriteStoragedData = localStorage.getItem("favorites") || [];
+    console.log('storage data:', JSON.parse(favoriteStoragedData));
+
+  }, [favorites])
 
   console.log('favorite context:', favorites);
 
